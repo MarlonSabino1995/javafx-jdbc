@@ -1,9 +1,12 @@
 package gui;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import application.Main;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -12,9 +15,11 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.entities.Departamento;
+import model.services.DepartamentoService;
 
 public class DepartamentoListController implements Initializable{
 
+	private DepartamentoService departamentoService;
 	@FXML
 	private TableView<Departamento> tableViewDepartamento;
 	
@@ -27,11 +32,16 @@ public class DepartamentoListController implements Initializable{
 	@FXML
 	private Button btNovo;
 	
+	private ObservableList<Departamento> obsList;
+	
 	@FXML
 	public void onBtNovoAction() {
 		System.out.println("Click novo");
 	}
 	
+	public void setDepartamentoService(DepartamentoService departamentoService) {
+		this.departamentoService = departamentoService;
+	}
 	
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
@@ -48,5 +58,12 @@ public class DepartamentoListController implements Initializable{
 		tableViewDepartamento.prefHeightProperty().bind(stage.heightProperty());
 	}
 	
-	
+	public void updateTableView() {
+		if(departamentoService == null) {
+			throw new IllegalStateException("O service estava nullo");
+		}
+		List<Departamento> list = departamentoService.findAll();
+		obsList = FXCollections.observableArrayList(list);
+		tableViewDepartamento.setItems(obsList);
+	}
 }
