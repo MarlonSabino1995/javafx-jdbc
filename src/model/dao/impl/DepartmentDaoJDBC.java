@@ -31,7 +31,7 @@ public class DepartmentDaoJDBC implements DepartmentDao{
 		PreparedStatement st = null;
 		
 		try {
-			st = conn.prepareStatement("INSERT INTO departamento (NOME) VALUES ?", Statement.RETURN_GENERATED_KEYS);
+			st = conn.prepareStatement("INSERT INTO departamento (NOME) VALUES (?)", Statement.RETURN_GENERATED_KEYS);
 			st.setString(1, obj.getNome());
 			
 			int rowsAffected = st.executeUpdate();
@@ -62,7 +62,7 @@ public class DepartmentDaoJDBC implements DepartmentDao{
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement(
-					"UPDATE Dapartamento set nome = ? where id = ?;");
+					"UPDATE departamento set nome = ? where id = ?");
 			st.setString(1, obj.getNome());
 			st.setInt(2, obj.getId());
 			st.executeQuery();
@@ -98,7 +98,7 @@ public class DepartmentDaoJDBC implements DepartmentDao{
 		ResultSet rs = null;
 		try {
 			st = conn.prepareStatement(
-					"SELECT * from dapartamento where id = ?");
+					"SELECT * from departamento where id = ?");
 			st.setInt(1, id);
 			rs = st.executeQuery();
 			if(rs.next()) {
