@@ -82,10 +82,10 @@ public class DepartmentDaoJDBC implements DepartmentDao{
 			st = conn.prepareStatement(
 					"Delete from departamento where id = ?");
 			st.setInt(1, id);
-			st.executeQuery();
+			st.executeUpdate();
 					
 		}catch(SQLException e) {
-			throw new DBExeception(e.getMessage());
+			throw new DbIntegrityException(e.getMessage());
 		}finally {
 			DB.closePreparedStatement(st);
 		}
