@@ -65,7 +65,7 @@ public class DepartmentDaoJDBC implements DepartmentDao{
 					"UPDATE departamento set nome = ? where id = ?");
 			st.setString(1, obj.getNome());
 			st.setInt(2, obj.getId());
-			st.executeQuery();
+			st.executeUpdate();
 			
 		}catch(SQLException e) {
 			throw new DbIntegrityException(e.getLocalizedMessage());
