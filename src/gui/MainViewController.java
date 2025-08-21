@@ -42,7 +42,7 @@ public class MainViewController implements Initializable {
 			controller.updateTableView();
 		});
 	}
-
+ 
 	@FXML
 	public void onMenuItemDepartamentoAction() {
 		loadView("/gui/ListaDepartamento.fxml", (DepartamentoListController controller) -> {
