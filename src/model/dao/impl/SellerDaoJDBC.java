@@ -63,8 +63,8 @@ public class SellerDaoJDBC implements SellerDao{
 	public void update(Vendedor obj) {
 		PreparedStatement st = null;
 		try {
-			st = conn.prepareStatement("UPDATE vendedor set nome = ?, email = ?, data_de_nascimento = ?"
-					+ " salario_base = ?, departamento_id = ? where id = ?");
+			st = conn.prepareStatement("UPDATE vendedor set (nome = ?, email = ?, data_de_nascimento = ?"
+					+ " salario_base = ?, departamento_id = ? where id = ?)");
 			
 			st.setString(1, obj.getNome());
 			st.setString(2, obj.getEmail());

@@ -1,5 +1,6 @@
 package gui;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Date;
 import java.util.List;
@@ -16,7 +17,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -24,6 +27,8 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.entities.Vendedor;
 import model.services.VendedorService;
@@ -65,7 +70,7 @@ public class VendedorListController implements Initializable, DataChangeListener
 		Stage parentStage = Utils.currentStage(event);
 		Vendedor vendedor = new Vendedor();
 
-		createDialogForm(vendedor, "/gui/DepartmentForm.fxml", parentStage);
+		createDialogForm(vendedor, "/gui/VendedorForm.fxml", parentStage);
 	}
 
 	public void setVendedorService(VendedorService vendedorService) {
@@ -102,27 +107,27 @@ public class VendedorListController implements Initializable, DataChangeListener
 	}
 
 	private void createDialogForm(Vendedor obj, String nomeAbsoluto, Stage parentStage) {
-//		try {
-//			FXMLLoader loader = new FXMLLoader(getClass().getResource(nomeAbsoluto));
-//			Pane pane = loader.load();
-//
-//			DepartmentFormController controller = loader.getController();
-//			controller.setVendedor(obj);
-//			controller.setDepService(new VendedorService());
-//			controller.subscribeDataChangeListener(this);
-//			controller.updateFormData();
-//
-//			Stage dialogStage = new Stage();
-//			dialogStage.setTitle("Entre com os dados do vendedor ");
-//			dialogStage.setScene(new Scene(pane));
-//			dialogStage.setResizable(false);
-//			dialogStage.initOwner(parentStage);
-//			dialogStage.initModality(Modality.WINDOW_MODAL);
-//			dialogStage.showAndWait();
-//
-//		} catch (IOException e) {
-//			Alerts.showAlert("IO Exception", "Erro ao carregar a página ", e.getMessage(), AlertType.ERROR);
-//		}
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(nomeAbsoluto));
+			Pane pane = loader.load();
+
+			VendedorFormController controller = loader.getController();
+			controller.setVendedor(obj);
+			controller.setDepService(new VendedorService());
+			controller.subscribeDataChangeListener(this);
+			controller.updateFormData();
+
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Entre com os dados do vendedor ");
+			dialogStage.setScene(new Scene(pane));
+			dialogStage.setResizable(false);
+			dialogStage.initOwner(parentStage);
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.showAndWait();
+
+		} catch (IOException e) {
+			Alerts.showAlert("IO Exception", "Erro ao carregar a página ", e.getMessage(), AlertType.ERROR);
+		}
 	}
 
 	@Override
